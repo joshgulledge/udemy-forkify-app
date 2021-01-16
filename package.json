@@ -1,0 +1,27 @@
+{
+  "name": "forkify",
+  "version": "1.0.0",
+  "description": "recipe app",
+  "main": "index.html",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joshgulledge/udemy-forkify-app.git"
+  },
+  "author": "josh gulledge",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/joshgulledge/udemy-forkify-app/issues"
+  },
+  "homepage": "https://github.com/joshgulledge/udemy-forkify-app#readme",
+  "devDependencies": {
+    "parcel": "^2.0.0-nightly.535",
+    "sass": "^1.32.4"
+  },
+  "dependencies": {
+    "node-forge": "^0.10.0"
+  }
+}
