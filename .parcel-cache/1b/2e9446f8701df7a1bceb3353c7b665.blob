@@ -1,0 +1,1 @@
+require('./bundle-manifest').register(JSON.parse("{\"5gbPA\":\"index.HASH_REF_acdd569e0777db4c948217651260cbf1.js\",\"27vdb\":\"icons.HASH_REF_45b0ad9486c68b78dcb808dba22bdf6e.svg\"}"));
