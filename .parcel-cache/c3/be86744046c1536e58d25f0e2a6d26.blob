@@ -5824,11 +5824,9 @@ try {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.TIMEOUT_SEC = exports.API_URL = void 0;
+exports.API_URL = void 0;
 const API_URL = `https://forkify-api.herokuapp.com/api/v2/recipes`;
 exports.API_URL = API_URL;
-const TIMEOUT_SEC = 10;
-exports.TIMEOUT_SEC = TIMEOUT_SEC;
 },{}],"0e8dcd8a4e1c61cf18f78e1c2563655d":[function(require,module,exports) {
 "use strict";
 
@@ -5836,8 +5834,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.getJSON = void 0;
-
-var _config = require("./config.js");
 
 const timeout = function (s) {
   return new Promise(function (_, reject) {
@@ -5849,7 +5845,7 @@ const timeout = function (s) {
 
 const getJSON = async function (url) {
   try {
-    const res = await Promise.race([fetch(url), timeout(_config.TIMEOUT_SEC)]); // 'https://forkify-api.herokuapp.com/api/v2/recipes/5ed6604591c37cdc054bc886'
+    const res = await Promise.race[(fetch(url), timeout(5))]; // 'https://forkify-api.herokuapp.com/api/v2/recipes/5ed6604591c37cdc054bc886'
 
     const data = await res.json();
     if (!res.ok) throw new Error(`${data.message} (${res.status})`);
@@ -5860,7 +5856,7 @@ const getJSON = async function (url) {
 };
 
 exports.getJSON = getJSON;
-},{"./config.js":"09212d541c5c40ff2bd93475a904f8de"}],"bcae1aced0301b01ccacb3e6f7dfede8":[function(require,module,exports) {
+},{}],"bcae1aced0301b01ccacb3e6f7dfede8":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {

@@ -5849,7 +5849,7 @@ const timeout = function (s) {
 
 const getJSON = async function (url) {
   try {
-    const res = await Promise.race([fetch(url), timeout(_config.TIMEOUT_SEC)]); // 'https://forkify-api.herokuapp.com/api/v2/recipes/5ed6604591c37cdc054bc886'
+    const res = await Promise.race([fetch(url), timeout(10)]); // 'https://forkify-api.herokuapp.com/api/v2/recipes/5ed6604591c37cdc054bc886'
 
     const data = await res.json();
     if (!res.ok) throw new Error(`${data.message} (${res.status})`);
