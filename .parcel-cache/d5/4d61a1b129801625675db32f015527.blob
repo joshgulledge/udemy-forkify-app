@@ -5892,8 +5892,6 @@ var _data = new WeakMap();
 
 var _errorMessage = new WeakMap();
 
-var _message = new WeakMap();
-
 var _clear = new WeakSet();
 
 var _generateMarkup = new WeakSet();
@@ -5921,11 +5919,6 @@ class RecipeView {
     _errorMessage.set(this, {
       writable: true,
       value: `The electrons couldnt find that recipe, Give them another chance? 💥`
-    });
-
-    _message.set(this, {
-      writable: true,
-      value: ``
     });
 
     _defineProperty(this, "renderSpinner", function () {
@@ -5970,12 +5963,12 @@ class RecipeView {
     _classPrivateFieldGet(this, _parentEl).insertAdjacentHTML('afterbegin', markup);
   }
 
-  renderMessage(message = _classPrivateFieldGet(this, _message)) {
+  renderError(message = _classPrivateFieldGet(this, _errorMessage)) {
     const markup = `
-      <div class="message">
+      <div class="error">
           <div>
             <svg>
-              <use href="${_icons.default}#icon-smile"></use>
+              <use href="${_icons.default}#icon-alert-triangle"></use>
             </svg>
           </div>
           <p>${message}</p>

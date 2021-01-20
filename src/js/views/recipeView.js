@@ -4,6 +4,8 @@ import { Fraction } from 'fractional';
 class RecipeView {
   #parentEl = document.querySelector('.recipe');
   #data;
+  #errorMessage = `The electrons couldnt find that recipe, Give them another chance? 💥`;
+  #message = ``;
 
   render(data) {
     this.#data = data;
@@ -24,9 +26,39 @@ class RecipeView {
         </svg>
       </div>;  
     `;
-    this.#parentEl.innerHTML = '';
+    this.#clear();
     this.#parentEl.insertAdjacentHTML('afterbegin', markup);
   };
+
+  renderError(message = this.#errorMessage) {
+    const markup = `
+      <div class="error">
+          <div>
+            <svg>
+              <use href="${icons}#icon-alert-triangle"></use>
+            </svg>
+          </div>
+          <p>${message}</p>
+      </div>
+    `;
+    this.#clear();
+    this.#parentEl.insertAdjacentHTML('afterbegin', markup);
+  }
+
+  renderMessage(message = this.#message) {
+    const markup = `
+      <div class="message">
+          <div>
+            <svg>
+              <use href="${icons}#icon-smile"></use>
+            </svg>
+          </div>
+          <p>${message}</p>
+      </div>
+    `;
+    this.#clear();
+    this.#parentEl.insertAdjacentHTML('afterbegin', markup);
+  }
 
   addHandlerRender(handler) {
     // window.addEventListener('hashchange', controlRecipes);
