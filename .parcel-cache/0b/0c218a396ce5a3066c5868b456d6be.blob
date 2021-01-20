@@ -511,8 +511,6 @@ const controlSearchResults = async function () {
 
 const init = function () {
   _recipeView.default.addHandlerRender(controlRecipes);
-
-  _searchView.default.addHandlerSearch(controlSearchResults);
 };
 
 init();
@@ -6621,18 +6619,12 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-function _classPrivateMethodGet(receiver, privateSet, fn) { if (!privateSet.has(receiver)) { throw new TypeError("attempted to get private field on non-instance"); } return fn; }
-
 function _classPrivateFieldGet(receiver, privateMap) { var descriptor = privateMap.get(receiver); if (!descriptor) { throw new TypeError("attempted to get private field on non-instance"); } if (descriptor.get) { return descriptor.get.call(receiver); } return descriptor.value; }
 
 var _parentEl = new WeakMap();
 
-var _clearInput = new WeakSet();
-
 class SearchView {
   constructor() {
-    _clearInput.add(this);
-
     _parentEl.set(this, {
       writable: true,
       value: document.querySelector('.search')
@@ -6640,25 +6632,14 @@ class SearchView {
   }
 
   getQuery() {
-    const query = _classPrivateFieldGet(this, _parentEl).querySelector('.search__field').value;
-
-    _classPrivateMethodGet(this, _clearInput, _clearInput2).call(this);
-
-    return query;
+    return _classPrivateFieldGet(this, _parentEl).querySelector('.search__field').value;
   }
 
   addHandlerSearch(handler) {
-    _classPrivateFieldGet(this, _parentEl).addEventListener('submit', function (e) {
-      e.preventDefault();
-      handler();
-    });
+    _classPrivateFieldGet(this, _parentEl).addEventListener('submit');
   }
 
 }
-
-var _clearInput2 = function _clearInput2() {
-  _classPrivateFieldGet(this, _parentEl).querySelector('.search__field').value = '';
-};
 
 var _default = new SearchView();
 

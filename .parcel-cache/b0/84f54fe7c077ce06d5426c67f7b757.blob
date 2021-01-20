@@ -6640,11 +6640,9 @@ class SearchView {
   }
 
   getQuery() {
-    const query = _classPrivateFieldGet(this, _parentEl).querySelector('.search__field').value;
+    return _classPrivateFieldGet(this, _parentEl).querySelector('.search__field').value;
 
-    _classPrivateMethodGet(this, _clearInput, _clearInput2).call(this);
-
-    return query;
+    _classPrivateMethodGet(this, _clearInput, _clearInput2);
   }
 
   addHandlerSearch(handler) {
