@@ -5982,7 +5982,9 @@ class RecipeView extends _view.default {
               </button>
             </div>
           </div>
+
           <div class="recipe__user-generated">
+            
           </div>
           <button class="btn--round">
             <svg class="">
@@ -6554,10 +6556,6 @@ class View {
   }
 
   render(data) {
-    if (!data || Array.isArray(data) && data.length === 0) {
-      return this.renderError();
-    }
-
     this._data = data;
 
     const markup = this._generateMarkup();
@@ -6668,10 +6666,6 @@ class ResultsView extends _view.default {
     super(...args);
 
     _defineProperty(this, "_parentEl", document.querySelector('.results'));
-
-    _defineProperty(this, "_errorMessage", `The All Powerful search came back with no results. Spell Check? 💥`);
-
-    _defineProperty(this, "_message", ``);
   }
 
   _generateMarkup() {

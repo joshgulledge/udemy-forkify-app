@@ -6554,8 +6554,8 @@ class View {
   }
 
   render(data) {
-    if (!data || Array.isArray(data) && data.length === 0) {
-      return this.renderError();
+    if (!data) {
+      return;
     }
 
     this._data = data;
