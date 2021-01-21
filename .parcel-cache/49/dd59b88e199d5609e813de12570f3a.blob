@@ -513,7 +513,7 @@ const controlSearchResults = async function () {
     if (!query) return;
     await model.loadSearchResults(query); // resultsView.render(model.state.search.results);
 
-    _resultsView.default.render(model.getSearchResultsPage(1)); // render initial pagination
+    _resultsView.default.render(model.getSearchResultsPage(2)); // render initial pagination
 
 
     _paginationView.default.render(model.state.search);
@@ -6750,20 +6750,14 @@ class PaginationView extends _view.default {
 
     if (this._data.page === 1 && numPages > 1) {
       return 'page 1 with other pages';
-    } // last page
+    } // page 1 no other pages
+    // last page
 
 
-    if (this._data.page === numPages && numPages > 1) {
+    if (this._data.page === numPages) {
       return 'the last page';
     } // other page
 
-
-    if (this._data.page < numPages) {
-      return 'some other page';
-    } // page 1 no other pages
-
-
-    return 'only one page';
   }
 
 }

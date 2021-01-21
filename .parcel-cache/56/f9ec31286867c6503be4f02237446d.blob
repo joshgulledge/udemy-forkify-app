@@ -513,7 +513,7 @@ const controlSearchResults = async function () {
     if (!query) return;
     await model.loadSearchResults(query); // resultsView.render(model.state.search.results);
 
-    _resultsView.default.render(model.getSearchResultsPage(1)); // render initial pagination
+    _resultsView.default.render(model.getSearchResultsPage()); // render initial pagination
 
 
     _paginationView.default.render(model.state.search);
@@ -6731,8 +6731,6 @@ var _view = _interopRequireDefault(require("./view.js"));
 
 var _icons = _interopRequireDefault(require("url:../../img/icons.svg"));
 
-var _config = require("../config.js");
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -6744,26 +6742,10 @@ class PaginationView extends _view.default {
     _defineProperty(this, "_parentEl", document.querySelector('.pagination'));
   }
 
-  _generateMarkup() {
-    const numPages = Math.ceil(this._data.results.length / this._data.resultsPerPage);
-    console.log('number of pages: ', numPages); //   page 1 with other pages
-
-    if (this._data.page === 1 && numPages > 1) {
-      return 'page 1 with other pages';
-    } // last page
-
-
-    if (this._data.page === numPages && numPages > 1) {
-      return 'the last page';
-    } // other page
-
-
-    if (this._data.page < numPages) {
-      return 'some other page';
-    } // page 1 no other pages
-
-
-    return 'only one page';
+  _generatemarkup() {//   page 1 with other pages
+    // page 1 no other pages
+    // last page
+    // other page
   }
 
 }
@@ -6771,6 +6753,6 @@ class PaginationView extends _view.default {
 var _default = new PaginationView();
 
 exports.default = _default;
-},{"./view.js":"6a3957d8744bf1d70b2b44f3726dda59","url:../../img/icons.svg":"5c08bd25a9198a7d356c4c254c9f0a9e","../config.js":"09212d541c5c40ff2bd93475a904f8de"}]},{},["be1b7e5c479c48c5558ce7b5e31a3ff3","ffe11e529193daa18295fe8996ab531b","175e469a7ea7db1c8c0744d04372621f"], null)
+},{"./view.js":"6a3957d8744bf1d70b2b44f3726dda59","url:../../img/icons.svg":"5c08bd25a9198a7d356c4c254c9f0a9e"}]},{},["be1b7e5c479c48c5558ce7b5e31a3ff3","ffe11e529193daa18295fe8996ab531b","175e469a7ea7db1c8c0744d04372621f"], null)
 
 //# sourceMappingURL=controller.9f7ac2f9.js.map
