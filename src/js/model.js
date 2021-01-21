@@ -64,3 +64,11 @@ export const getSearchResultsPage = function (page = state.search.page) {
   return state.search.results.slice(start, end);
   // slice does not include last value!
 };
+
+export const updateServings = function (newServings) {
+  state.reciepe.ingredients.forEach(ing => {
+    ing.quantity = (ing.quantity * newServings) / state.reciepe.servings;
+  });
+
+  state.reciepe.servings = newServings;
+};

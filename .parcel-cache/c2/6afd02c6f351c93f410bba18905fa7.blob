@@ -5153,9 +5153,8 @@ exports.getSearchResultsPage = getSearchResultsPage;
 
 const updateServings = function (newServings) {
   state.reciepe.ingredients.forEach(ing => {
-    ing.quantity = ing.quantity * newServings / state.reciepe.servings;
+    ing.quantity = 3;
   });
-  state.reciepe.servings = newServings;
 };
 
 exports.updateServings = updateServings;

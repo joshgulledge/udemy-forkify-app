@@ -5155,7 +5155,6 @@ const updateServings = function (newServings) {
   state.reciepe.ingredients.forEach(ing => {
     ing.quantity = ing.quantity * newServings / state.reciepe.servings;
   });
-  state.reciepe.servings = newServings;
 };
 
 exports.updateServings = updateServings;
