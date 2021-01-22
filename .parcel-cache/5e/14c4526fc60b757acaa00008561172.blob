@@ -542,12 +542,8 @@ const controlServings = function (newServings) {
 };
 
 const controlAddBookmark = function () {
-  if (!model.state.recipe.bookmarked) {
-    model.addBookmark(model.state.recipe);
-  } else {
-    model.deleteBookmark(model.state.recipe.id);
-  } // console.log(model.state.recipe);
-
+  model.addBookmark(model.state.recipe);
+  console.log(model.state.recipe);
 
   _recipeView.default.update(model.state.recipe);
 };
@@ -5199,11 +5195,10 @@ const addBookmark = function (recipe) {
 exports.addBookmark = addBookmark;
 
 const deleteBookmark = function (id) {
-  // remove bookmark from array
   const index = state.bookmarks.findIndex(el => el.id === id);
-  state.bookmarks.splice(index, 1); // mark currect recipe as NOT bookmarked
+  state.bookmarks.splice(index, 1); // mark currect recipe as bookmarked
 
-  if (id === state.recipe.id) {
+  if (recipe.id === state.recipe.id) {
     state.recipe.bookmarked = false;
   }
 };

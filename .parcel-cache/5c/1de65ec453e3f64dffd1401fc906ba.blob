@@ -544,7 +544,9 @@ const controlServings = function (newServings) {
 const controlAddBookmark = function () {
   if (!model.state.recipe.bookmarked) {
     model.addBookmark(model.state.recipe);
-  } else {
+  }
+
+  if (model.state.recipe.bookmarked) {
     model.deleteBookmark(model.state.recipe.id);
   } // console.log(model.state.recipe);
 
@@ -5203,7 +5205,7 @@ const deleteBookmark = function (id) {
   const index = state.bookmarks.findIndex(el => el.id === id);
   state.bookmarks.splice(index, 1); // mark currect recipe as NOT bookmarked
 
-  if (id === state.recipe.id) {
+  if (recipe.id === state.recipe.id) {
     state.recipe.bookmarked = false;
   }
 };
