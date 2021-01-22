@@ -6807,8 +6807,6 @@ exports.default = void 0;
 
 var _view = _interopRequireDefault(require("./view.js"));
 
-var _previewView = _interopRequireDefault(require("./previewView.js"));
-
 var _icons = _interopRequireDefault(require("url:../../img/icons.svg"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -6827,48 +6825,20 @@ class ResultsView extends _view.default {
   }
 
   _generateMarkup() {
-    return this._data.map(result => _previewView.default.render(result, false)).join('');
+    return this._data.map(this._generateMarkupPreview).join('');
   }
 
-}
-
-var _default = new ResultsView();
-
-exports.default = _default;
-},{"./view.js":"6a3957d8744bf1d70b2b44f3726dda59","url:../../img/icons.svg":"5c08bd25a9198a7d356c4c254c9f0a9e","./previewView.js":"e4d6583325a8b6c9380670c4f233bf07"}],"e4d6583325a8b6c9380670c4f233bf07":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _view = _interopRequireDefault(require("./view.js"));
-
-var _icons = _interopRequireDefault(require("url:../../img/icons.svg"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-class PreviewView extends _view.default {
-  constructor(...args) {
-    super(...args);
-
-    _defineProperty(this, "_parentEl", '');
-  }
-
-  _generateMarkup() {
+  _generateMarkupPreview(result) {
     const id = window.location.hash.slice(1);
     return `
         <li class="preview">
-            <a class="preview__link ${this._data.id === id ? `preview__link--active` : ''}" href="#${this._data.id}">
+            <a class="preview__link ${result.id === id ? `preview__link--active` : ''}" href="#${result.id}">
                 <figure class="preview__fig">
-                    <img src="${this._data.image}" alt="${this._data.title}" />
+                    <img src="${result.image}" alt="${result.title}" />
                 </figure>
                 <div class="preview__data">
-                    <h4 class="preview__title">${this._data.title}</h4>
-                    <p class="preview__publisher">${this._data.publisher}</p>
+                    <h4 class="preview__title">${result.title}</h4>
+                    <p class="preview__publisher">${result.publisher}</p>
                 </div>
             </a>
         </li>
@@ -6877,7 +6847,7 @@ class PreviewView extends _view.default {
 
 }
 
-var _default = new PreviewView();
+var _default = new ResultsView();
 
 exports.default = _default;
 },{"./view.js":"6a3957d8744bf1d70b2b44f3726dda59","url:../../img/icons.svg":"5c08bd25a9198a7d356c4c254c9f0a9e"}],"d2063f3e7de2e4cdacfcb5eb6479db05":[function(require,module,exports) {
@@ -6998,7 +6968,7 @@ class BookmarksView extends _view.default {
   }
 
   _generateMarkup() {
-    return this._data.map(bookmark => _previewView.default.render(bookmark, false)).join('');
+    return this._data.map(bookmark => _previewView.default.render(bookmark)).join('');
   }
 
 }
@@ -7006,6 +6976,51 @@ class BookmarksView extends _view.default {
 var _default = new BookmarksView();
 
 exports.default = _default;
-},{"./view.js":"6a3957d8744bf1d70b2b44f3726dda59","url:../../img/icons.svg":"5c08bd25a9198a7d356c4c254c9f0a9e","./previewView.js":"e4d6583325a8b6c9380670c4f233bf07"}]},{},["be1b7e5c479c48c5558ce7b5e31a3ff3","ffe11e529193daa18295fe8996ab531b","175e469a7ea7db1c8c0744d04372621f"], null)
+},{"./view.js":"6a3957d8744bf1d70b2b44f3726dda59","url:../../img/icons.svg":"5c08bd25a9198a7d356c4c254c9f0a9e","./previewView.js":"e4d6583325a8b6c9380670c4f233bf07"}],"e4d6583325a8b6c9380670c4f233bf07":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _view = _interopRequireDefault(require("./view.js"));
+
+var _icons = _interopRequireDefault(require("url:../../img/icons.svg"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+class PreviewView extends _view.default {
+  constructor(...args) {
+    super(...args);
+
+    _defineProperty(this, "_parentEl", '');
+  }
+
+  _generateMarkup() {
+    const id = window.location.hash.slice(1);
+    return `
+        <li class="preview">
+            <a class="preview__link ${result.id === id ? `preview__link--active` : ''}" href="#${result.id}">
+                <figure class="preview__fig">
+                    <img src="${result.image}" alt="${result.title}" />
+                </figure>
+                <div class="preview__data">
+                    <h4 class="preview__title">${result.title}</h4>
+                    <p class="preview__publisher">${result.publisher}</p>
+                </div>
+            </a>
+        </li>
+    `;
+  }
+
+}
+
+var _default = new PreviewView();
+
+exports.default = _default;
+},{"./view.js":"6a3957d8744bf1d70b2b44f3726dda59","url:../../img/icons.svg":"5c08bd25a9198a7d356c4c254c9f0a9e"}]},{},["be1b7e5c479c48c5558ce7b5e31a3ff3","ffe11e529193daa18295fe8996ab531b","175e469a7ea7db1c8c0744d04372621f"], null)
 
 //# sourceMappingURL=controller.9f7ac2f9.js.map
