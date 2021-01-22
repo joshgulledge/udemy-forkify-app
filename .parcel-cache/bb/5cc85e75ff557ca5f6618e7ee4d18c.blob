@@ -492,10 +492,7 @@ const controlRecipes = async function () {
 
     if (!id) return;
 
-    _recipeView.default.renderSpinner(); // mark selected search results
-
-
-    _resultsView.default.update(model.getSearchResultsPage()); // recipe loading
+    _recipeView.default.renderSpinner(); // recipe loading
 
 
     await model.loadRecipe(id); // render recipe
@@ -6633,6 +6630,10 @@ class View {
   }
 
   update(data) {
+    if (!data || Array.isArray(data) && data.length === 0) {
+      return this.renderError();
+    }
+
     this._data = data;
 
     const newMarkup = this._generateMarkup(); //creates a "virtual DOM" in memory
@@ -6642,15 +6643,11 @@ class View {
     const newElements = Array.from(newDom.querySelectorAll('*'));
     const curElements = Array.from(this._parentEl.querySelectorAll('*'));
     newElements.forEach((newEl, i) => {
-      const curEl = curElements[i]; // update the text if chaned
-
-      if (!newEl.isEqualNode(curEl) && newEl.firstChild?.nodeValue.trim() !== '') {
-        curEl.textContent = newEl.textContent;
-      } // update the data attributes
-
+      const curEl = curElements[i];
+      console.log(curEl, newEl.isEqualNode(curEl));
 
       if (!newEl.isEqualNode(curEl)) {
-        Array.from(newEl.attributes).forEach(attr => curEl.setAttribute(attr.name, attr.value));
+        curEl.textContent = newEl.textContent;
       }
     });
   }
@@ -6767,10 +6764,9 @@ class ResultsView extends _view.default {
   }
 
   _generateMarkupPreview(result) {
-    const id = window.location.hash.slice(1);
     return `
         <li class="preview">
-            <a class="preview__link ${result.id === id ? `preview__link--active` : ''}" href="#${result.id}">
+            <a class="preview__link" href="#${result.id}">
                 <figure class="preview__fig">
                     <img src="${result.image}" alt="${result.title}" />
                 </figure>
