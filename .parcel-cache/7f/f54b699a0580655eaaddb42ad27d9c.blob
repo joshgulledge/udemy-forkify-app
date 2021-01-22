@@ -568,10 +568,6 @@ const controlBookmarks = function () {
   _bookmarksView.default.render(model.state.bookmarks);
 };
 
-const controlAddRecipe = function (newRecipe) {
-  console.log(newRecipe); // upload new recipe data
-};
-
 const init = function () {
   _bookmarksView.default.addHandlerRender(controlBookmarks);
 
@@ -584,8 +580,6 @@ const init = function () {
   _searchView.default.addHandlerSearch(controlSearchResults);
 
   _paginationView.default.addHandlerClick(controlPagination);
-
-  _addRecipeView.default.addHandlerUpload(controlAddRecipe);
 };
 
 init();
@@ -7098,12 +7092,10 @@ class AddRecipeView extends _view.default {
     this._overlay.addEventListener('click', this.toggleWindow.bind(this));
   }
 
-  addHandlerUpload(handler) {
+  addHandlerUpload() {
     this._parentEl.addEventListener('submit', function (e) {
       e.preventDefault();
-      const dataArr = [...new FormData(this)];
-      const data = Object.fromEntries(dataArr);
-      handler(data);
+      const data = [...new FormData(this)];
     });
   }
 
