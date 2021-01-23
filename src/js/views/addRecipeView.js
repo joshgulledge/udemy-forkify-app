@@ -4,6 +4,7 @@ import { RES_PER_PAGE } from '../config.js';
 
 class AddRecipeView extends View {
   _parentEl = document.querySelector('.upload');
+  _message = 'Recipe was uploaded';
   _window = document.querySelector('.add-recipe-window');
   _overlay = document.querySelector('.overlay');
   _btnOpen = document.querySelector('.nav__btn--add-recipe');
