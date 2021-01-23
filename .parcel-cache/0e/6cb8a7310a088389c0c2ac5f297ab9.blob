@@ -1,12 +1,30 @@
-import View from './view.js';
+"use strict";
 
-import icons from 'url:../../img/icons.svg';
-import { Fraction } from 'fractional';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
 
-class RecipeView extends View {
-  _parentEl = document.querySelector('.recipe');
-  _errorMessage = `The electrons couldnt find that recipe, Give them another chance? 💥`;
-  _message = ``;
+var _view = _interopRequireDefault(require("./view.js"));
+
+var _icons = _interopRequireDefault(require("url:../../img/icons.svg"));
+
+var _fractional = require("fractional");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+class RecipeView extends _view.default {
+  constructor(...args) {
+    super(...args);
+
+    _defineProperty(this, "_parentEl", document.querySelector('.recipe'));
+
+    _defineProperty(this, "_errorMessage", `The electrons couldnt find that recipe, Give them another chance? 💥`);
+
+    _defineProperty(this, "_message", ``);
+  }
 
   addHandlerRender(handler) {
     // window.addEventListener('hashchange', controlRecipes);
@@ -18,7 +36,9 @@ class RecipeView extends View {
     this._parentEl.addEventListener('click', function (e) {
       const btn = e.target.closest('.btn--update-servings');
       if (!btn) return;
-      const { updateTo } = btn.dataset;
+      const {
+        updateTo
+      } = btn.dataset;
 
       if (+updateTo > 0) {
         handler(+updateTo);
@@ -37,9 +57,7 @@ class RecipeView extends View {
   _generateMarkup() {
     return `
     <figure class="recipe__fig">
-          <img src="${this._data.image}" alt="${
-      this._data.title
-    }" class="recipe__img" />
+          <img src="${this._data.image}" alt="${this._data.title}" class="recipe__img" />
           <h1 class="recipe__title">
             <span>${this._data.title}</span>
           </h1>
@@ -48,49 +66,39 @@ class RecipeView extends View {
         <div class="recipe__details">
           <div class="recipe__info">
             <svg class="recipe__info-icon">
-              <use href="${icons}#icon-clock"></use>
+              <use href="${_icons.default}#icon-clock"></use>
             </svg>
-            <span class="recipe__info-data recipe__info-data--minutes">${
-              this._data.cookingTime
-            }</span>
+            <span class="recipe__info-data recipe__info-data--minutes">${this._data.cookingTime}</span>
             <span class="recipe__info-text">minutes</span>
           </div>
           <div class="recipe__info">
             <svg class="recipe__info-icon">
-              <use href="${icons}#icon-users"></use>
+              <use href="${_icons.default}#icon-users"></use>
             </svg>
-            <span class="recipe__info-data recipe__info-data--people">${
-              this._data.servings
-            }</span>
+            <span class="recipe__info-data recipe__info-data--people">${this._data.servings}</span>
             <span class="recipe__info-text">servings</span>
 
             <div class="recipe__info-buttons">
-              <button class="btn--tiny btn--update-servings" data-update-to="${
-                this._data.servings - 1
-              }">
+              <button class="btn--tiny btn--update-servings" data-update-to="${this._data.servings - 1}">
                 <svg>
-                  <use href="${icons}#icon-minus-circle"></use>
+                  <use href="${_icons.default}#icon-minus-circle"></use>
                 </svg>
               </button>
-              <button class="btn--tiny btn--update-servings" data-update-to="${
-                this._data.servings + 1
-              }">
+              <button class="btn--tiny btn--update-servings" data-update-to="${this._data.servings + 1}">
                 <svg>
-                  <use href="${icons}#icon-plus-circle"></use>
+                  <use href="${_icons.default}#icon-plus-circle"></use>
                 </svg>
               </button>
             </div>
           </div>
           <div class="recipe__user-generated ${this._data.key ? '' : 'hidden'}">
             <svg>
-              <use href="${icons}#icon-user"></use>
+              <use href="${_icons.default}#icon-user"></use>
             </svg>
           </div>
           <button class="btn--round btn--bookmark">
             <svg class="">
-              <use href="${icons}#icon-bookmark${
-      this._data.bookmarked ? '-fill' : ''
-    }"></use>
+              <use href="${_icons.default}#icon-bookmark${this._data.bookmarked ? '-fill' : ''}"></use>
             </svg>
           </button>
         </div>
@@ -106,9 +114,7 @@ class RecipeView extends View {
           <h2 class="heading--2">How to cook it</h2>
           <p class="recipe__directions-text">
             This recipe was carefully designed and tested by
-            <span class="recipe__publisher">${
-              this._data.publisher
-            }</span>. Please check out
+            <span class="recipe__publisher">${this._data.publisher}</span>. Please check out
             directions at their website.
           </p>
           <a
@@ -129,17 +135,18 @@ class RecipeView extends View {
     return `
         <li class="recipe__ingredient">
           <svg class="recipe__icon">
-            <use href="${icons}#icon-check"></use>
+            <use href="${_icons.default}#icon-check"></use>
           </svg>
-          <div class="recipe__quantity">${
-            ing.quantity ? new Fraction(ing.quantity).toString() : ''
-          }</div>
+          <div class="recipe__quantity">${ing.quantity ? new _fractional.Fraction(ing.quantity).toString() : ''}</div>
           <div class="recipe__description">
             <span class="recipe__unit">${ing.unit}</span>
             ${ing.description}
           </div>
         </li> `;
   }
+
 }
 
-export default new RecipeView();
+var _default = new RecipeView();
+
+exports.default = _default;

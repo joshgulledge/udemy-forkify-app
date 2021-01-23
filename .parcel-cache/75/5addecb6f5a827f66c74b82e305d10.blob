@@ -582,16 +582,10 @@ const controlAddRecipe = async function (newRecipe) {
     _recipeView.default.render(model.state.recipe); // display success message
 
 
-    _addRecipeView.default.renderMessage(); // render bookmark view
+    _addRecipeView.default.renderMessage(); // close form window
 
 
-    _bookmarksView.default.render(model.state.bookmarks); // change url id
-
-
-    window.history.pushState(null, '', `#${model.state.recipe.id}`); // close form window
-
-    setTimeout(function () {
-      _addRecipeView.default.toggleWindow();
+    setTimeout(function () {// addRecipeView.toggleWindow();
     }, _config.MODAL_CLOSE_SEC * 1000);
   } catch (err) {
     console.error('👎🏼', err);
@@ -5157,7 +5151,6 @@ var _config = require("./config.js");
 
 var _helpers = require("./helpers.js");
 
-// import { getJSON, sendJSON } from './helpers.js';
 const state = {
   recipe: {},
   search: {
@@ -5191,7 +5184,7 @@ const createRecipeObject = function (data) {
 
 const loadRecipe = async function (id) {
   try {
-    const data = await (0, _helpers.AJAX)(`${_config.API_URL}${id}?key=${_config.KEY}`);
+    const data = await (0, _helpers.getJSON)(`${_config.API_URL}${id}`);
     state.recipe = createRecipeObject(data);
 
     if (state.bookmarks.some(bookmark => bookmark.id === id)) {
@@ -5209,17 +5202,14 @@ exports.loadRecipe = loadRecipe;
 const loadSearchResults = async function (query) {
   try {
     state.search.query = query;
-    const data = await (0, _helpers.AJAX)(`${_config.API_URL}?search=${query}&key=${_config.KEY}`); // console.log(data);
+    const data = await (0, _helpers.getJSON)(`${_config.API_URL}?search=${query}`); // console.log(data);
 
     state.search.results = data.data.recipes.map(rec => {
       return {
         id: rec.id,
         title: rec.title,
         publisher: rec.publisher,
-        image: rec.image_url,
-        ...(rec.key && {
-          key: rec.key
-        })
+        image: rec.image_url
       };
     });
     state.search.page = 1;
@@ -5296,14 +5286,13 @@ const clearBookmarks = function () {
 const uploadRecipe = async function (newRecipe) {
   try {
     const ingredients = Object.entries(newRecipe).filter(entry => entry[0].startsWith('ingredient') && entry[1] !== '').map(ing => {
-      const ingArr = ing[1].split(',').map(el => el.trim()); // const ingArr = ing[1].replaceAll(' ', '').split(',');
-
+      const ingArr = ing[1].replaceAll(' ', '').split(',');
       if (ingArr.length !== 3) throw new Error('Wrong ingredient format! Please use comma for any empty items');
-      const [quantity, unit, description] = ingArr;
+      const [quantity, unit, decription] = ingArr;
       return {
         quantity: quantity ? +quantity : null,
         unit,
-        description
+        decription
       };
     });
     const recipe = {
@@ -5315,7 +5304,7 @@ const uploadRecipe = async function (newRecipe) {
       servings: +newRecipe.servings,
       ingredients
     };
-    const data = await (0, _helpers.AJAX)(`${_config.API_URL}?key=${_config.KEY}`, recipe);
+    const data = await (0, _helpers.sendJSON)(`${_config.API_URL}?key=${_config.KEY}`, recipe);
     state.recipe = createRecipeObject(data);
     addBookmark(state.recipe);
   } catch (err) {
@@ -6097,7 +6086,7 @@ exports.MODAL_CLOSE_SEC = MODAL_CLOSE_SEC;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.AJAX = void 0;
+exports.sendJSON = exports.getJSON = void 0;
 
 var _config = require("./config.js");
 
@@ -6109,15 +6098,9 @@ const timeout = function (s) {
   });
 };
 
-const AJAX = async function (url, uploadData = undefined) {
+const getJSON = async function (url) {
   try {
-    const fetchPro = uploadData ? fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(uploadData)
-    }) : fetch(url);
+    const fetchPro = fetch(url);
     const res = await Promise.race([fetchPro, timeout(_config.TIMEOUT_SEC)]);
     const data = await res.json();
     if (!res.ok) throw new Error(`${data.message} (${res.status})`);
@@ -6126,43 +6109,28 @@ const AJAX = async function (url, uploadData = undefined) {
     throw err;
   }
 };
-/*
-export const getJSON = async function (url) {
-  try {
-    const fetchPro = fetch(url);
-    const res = await Promise.race([fetchPro, timeout(TIMEOUT_SEC)]);
-    const data = await res.json();
 
-    if (!res.ok) throw new Error(`${data.message} (${res.status})`);
-    return data;
-  } catch (err) {
-    throw err;
-  }
-};
+exports.getJSON = getJSON;
 
-export const sendJSON = async function (url, uploadData) {
+const sendJSON = async function (url, uploadData) {
   try {
     const fetchPro = fetch(url, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       },
-      body: JSON.stringify(uploadData),
+      body: JSON.stringify(uploadData)
     });
-
-    const res = await Promise.race([fetchPro, timeout(TIMEOUT_SEC)]);
+    const res = await Promise.race([fetchPro, timeout(_config.TIMEOUT_SEC)]);
     const data = await res.json();
-
     if (!res.ok) throw new Error(`${data.message} (${res.status})`);
     return data;
   } catch (err) {
     throw err;
   }
 };
-*/
 
-
-exports.AJAX = AJAX;
+exports.sendJSON = sendJSON;
 },{"./config.js":"09212d541c5c40ff2bd93475a904f8de"}],"bcae1aced0301b01ccacb3e6f7dfede8":[function(require,module,exports) {
 "use strict";
 
@@ -6257,10 +6225,7 @@ class RecipeView extends _view.default {
               </button>
             </div>
           </div>
-          <div class="recipe__user-generated ${this._data.key ? '' : 'hidden'}">
-            <svg>
-              <use href="${_icons.default}#icon-user"></use>
-            </svg>
+          <div class="recipe__user-generated">
           </div>
           <button class="btn--round btn--bookmark">
             <svg class="">
@@ -7022,14 +6987,9 @@ class PreviewView extends _view.default {
                     <img src="${this._data.image}" alt="${this._data.title}" />
                 </figure>
                 <div class="preview__data">
-                 <h4 class="preview__title">${this._data.title}</h4>
-                 <p class="preview__publisher">${this._data.publisher}</p>
-                  <div class="preview__user-generated ${this._data.key ? '' : 'hidden'}">
-                   <svg>
-                    <use href="${_icons.default}#icon-user"></use>
-                   </svg>
-                  </div>
-               </div>
+                    <h4 class="preview__title">${this._data.title}</h4>
+                    <p class="preview__publisher">${this._data.publisher}</p>
+                </div>
             </a>
         </li>
     `;

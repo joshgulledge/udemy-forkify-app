@@ -5217,8 +5217,8 @@ const loadSearchResults = async function (query) {
         title: rec.title,
         publisher: rec.publisher,
         image: rec.image_url,
-        ...(rec.key && {
-          key: rec.key
+        ...(recipe.key && {
+          key: recipe.key
         })
       };
     });
@@ -5296,8 +5296,7 @@ const clearBookmarks = function () {
 const uploadRecipe = async function (newRecipe) {
   try {
     const ingredients = Object.entries(newRecipe).filter(entry => entry[0].startsWith('ingredient') && entry[1] !== '').map(ing => {
-      const ingArr = ing[1].split(',').map(el => el.trim()); // const ingArr = ing[1].replaceAll(' ', '').split(',');
-
+      const ingArr = ing[1].replaceAll(' ', '').split(',');
       if (ingArr.length !== 3) throw new Error('Wrong ingredient format! Please use comma for any empty items');
       const [quantity, unit, description] = ingArr;
       return {
